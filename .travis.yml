@@ -28,6 +28,3 @@ install:
 script:
   - ./gradlew build
   - ./gradlew crashlyticsUploadDistributionDebug
-
-notifications:
-  slack: elpassion:lsR4jChu4tQz76wy1uIINjEl
