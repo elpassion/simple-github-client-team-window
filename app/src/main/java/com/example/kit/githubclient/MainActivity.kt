@@ -1,6 +1,7 @@
 package com.example.kit.githubclient
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,7 +14,7 @@ import io.fabric.sdk.android.Fabric
 
 
 class MainActivity : AppCompatActivity() {
-    val mainRecyclerView by lazy { findViewById(R.id.main_recycler_view) as RecyclerView }
+    private val mainRecyclerView by lazy { findViewById(R.id.main_recycler_view) as RecyclerView }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,11 @@ class MainActivity : AppCompatActivity() {
     public fun loadRecyclerView(itemList : List<ItemModel>){
         mainRecyclerView.layoutManager = LinearLayoutManager(mainRecyclerView.context)
         mainRecyclerView.adapter = ItemListAdapter(itemList)
+    }
+
+    public fun printMessege(messege : String)
+    {
+        Snackbar.make(mainRecyclerView, messege, Snackbar.LENGTH_LONG).show()
     }
 }
 

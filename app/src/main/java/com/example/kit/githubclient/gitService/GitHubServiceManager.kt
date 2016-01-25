@@ -60,7 +60,7 @@ class GitHubServiceManager(val activity : Activity) {
     }
 
     private fun dataNotLoaded(t : Throwable) {
-        throw t
+        (activity as MainActivity).printMessege("There was a problem loading list")
     }
 
 }
