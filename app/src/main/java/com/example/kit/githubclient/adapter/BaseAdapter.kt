@@ -1,9 +1,8 @@
-package pl.elpassion.dmalantowicz.rest_client_example.adapter
+package com.example.kit.githubclient.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-
-import java.util.ArrayList
+import java.util.*
 
 open class BaseAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
