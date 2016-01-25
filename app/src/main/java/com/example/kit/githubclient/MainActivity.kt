@@ -5,6 +5,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.widget.EditText
 import com.crashlytics.android.Crashlytics
 import com.example.kit.githubclient.adapter.ItemListAdapter
 import com.example.kit.githubclient.dataModels.ItemModel
@@ -14,12 +16,27 @@ import io.fabric.sdk.android.Fabric
 
 
 class MainActivity : AppCompatActivity() {
-    private val mainRecyclerView by lazy { findViewById(R.id.main_recycler_view) as RecyclerView }
-
+    val mainRecyclerView by lazy { findViewById(R.id.main_recycler_view) as RecyclerView }
+    val editText by lazy{findViewById(R.id.edit_text) as EditText}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Fabric.with(this, Crashlytics());
         setContentView(R.layout.activity_main)
+        editText.addTextChangedListener(object:android.text.TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                //todo pobranie danych o 1 userze
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //throw UnsupportedOperationException()
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //throw UnsupportedOperationException()
+            }
+
+        })
+
     }
 
     override fun onStart() {
