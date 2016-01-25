@@ -29,6 +29,15 @@ class GitHubServiceManager {
         retrofit.create(GitUserDataService::class.java)
     }
 
+    public fun getReposForUser(name :String) {
+        gitUserDataService.getData(name).subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread()).subscribe( {userReposLoaded(it)}, {dataNotLoaded(it)})
+    }
+
+    private fun userReposLoaded(list : List<Repository>) {
+        //todo bind to adapter
+    }
+
     public fun getMainList() {
         val users = gitUserService.getData().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
