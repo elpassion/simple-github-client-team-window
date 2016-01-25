@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.kit.githubclient.R
 import com.example.kit.githubclient.dataModels.Repository
-import pl.elpassion.dmalantowicz.rest_client_example.adapter.ItemAdapter
 
 /**
  * Created by jasiekpor on 22.01.2016.
