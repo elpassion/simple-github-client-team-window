@@ -30,7 +30,7 @@ class UserItemAdapter(private val user: User) : ItemAdapter {
         Glide.with(nameRateItemHolder.icon.context)
                 .load(user.avatar_url)
                 .into(nameRateItemHolder.icon)
-        nameRateItemHolder.login.text = user.login
+        nameRateItemHolder.login.text = user.name
     }
 
     private inner class UserItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
