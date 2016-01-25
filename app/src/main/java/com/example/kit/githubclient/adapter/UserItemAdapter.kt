@@ -28,7 +28,7 @@ class UserItemAdapter(private val user: User) : ItemAdapter {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder) {
         val nameRateItemHolder = holder as UserItemHolder
         Glide.with(nameRateItemHolder.icon.context)
-                .load(user.icon)
+                .load(user.avatar_url)
                 .into(nameRateItemHolder.icon)
         nameRateItemHolder.login.text = user.login
     }
