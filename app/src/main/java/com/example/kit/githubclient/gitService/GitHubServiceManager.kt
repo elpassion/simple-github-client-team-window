@@ -53,7 +53,7 @@ class GitHubServiceManager(val activity : Activity) {
         //val argList = ArrayList<ItemModel>()
 
         //todo populate
-        users+repos
+        (users+repos).sorted()
     }
 
     private fun dataLoaded(list : List<ItemModel>)
