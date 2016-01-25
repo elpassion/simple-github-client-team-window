@@ -6,7 +6,6 @@ import com.example.kit.githubclient.dataModels.User
 import retrofit2.GsonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.RxJavaCallAdapterFactory
-import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import java.util.*
@@ -36,20 +35,24 @@ class GitHubServiceManager {
         val repos =  gitReposService.getData().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 
-        rx.Observable.zip(users, repos, zipFun).subscribe{dataLoaded(it)}
+        rx.Observable.zip(users, repos, zipFun).subscribe( {dataLoaded(it)}, {dataNotLoaded(it)} )
     }
 
     val zipFun = {
         users : List<User>, repos : List<Repository> ->
         val argList = ArrayList<ItemModel>()
         //todo populate
-        Observable.just(argList)
+        argList
     }
 
-    private fun dataLoaded(list : Observable<ArrayList<ItemModel>>?)
+    private fun dataLoaded(list : ArrayList<ItemModel>?)
     {
         //todo bind to adapter
         //Log.e()
+    }
+
+    private fun dataNotLoaded(t : Throwable) {
+        throw t
     }
 
 }
