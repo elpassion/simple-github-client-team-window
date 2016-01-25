@@ -1,5 +1,7 @@
 package com.example.kit.githubclient.gitService
 
+import android.app.Activity
+import com.example.kit.githubclient.MainActivity
 import com.example.kit.githubclient.dataModels.ItemModel
 import com.example.kit.githubclient.dataModels.Repository
 import com.example.kit.githubclient.dataModels.User
@@ -8,9 +10,8 @@ import retrofit2.Retrofit
 import retrofit2.RxJavaCallAdapterFactory
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import java.util.*
 
-class GitHubServiceManager {
+class GitHubServiceManager(val activity : Activity) {
     companion object{
         private val BASE_URI="https://api.github.com"
         private val retrofit = Retrofit.Builder()
@@ -49,14 +50,15 @@ class GitHubServiceManager {
 
     val zipFun = {
         users : List<User>, repos : List<Repository> ->
-        val argList = ArrayList<ItemModel>()
+        //val argList = ArrayList<ItemModel>()
+
         //todo populate
-        argList
+        users+repos
     }
 
-    private fun dataLoaded(list : ArrayList<ItemModel>?)
+    private fun dataLoaded(list : List<ItemModel>)
     {
-        //todo bind to adapter
+        (activity as MainActivity).loadRecyclerView(list)
         //Log.e()
     }
 

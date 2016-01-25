@@ -28,6 +28,6 @@ class RepositoryItemAdapter(private val repository: Repository) : ItemAdapter {
     }
 
     private inner class RepositoryItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.findViewById(R.id.user_text_view) as TextView
+        val name = itemView.findViewById(R.id.repository_text_view) as TextView
     }
 }

@@ -8,12 +8,12 @@ import com.example.kit.githubclient.dataModels.User
 /**
  * Created by jasiekpor on 25.01.2016.
  */
-    class ItemListAdapter(val items:List<ItemModel>): BaseAdapter() {
-    init{
+class ItemListAdapter(val items: List<ItemModel>) : BaseAdapter() {
+    init {
         items.forEach {
-            if(it is User)
-            adapters.add(UserItemAdapter(it))
-            else if(it is Repository)
+            if (it is User)
+                adapters.add(UserItemAdapter(it))
+            else if (it is Repository)
                 adapters.add(RepositoryItemAdapter(it))
         }
     }
