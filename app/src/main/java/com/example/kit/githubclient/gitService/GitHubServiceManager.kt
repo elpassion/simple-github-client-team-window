@@ -1,13 +1,15 @@
 package com.example.kit.githubclient.gitService
 
-import android.util.Log
+import com.example.kit.githubclient.dataModels.ItemModel
 import com.example.kit.githubclient.dataModels.Repository
 import com.example.kit.githubclient.dataModels.User
 import retrofit2.GsonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.RxJavaCallAdapterFactory
+import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
+import java.util.*
 
 class GitHubServiceManager {
     companion object{
@@ -33,15 +35,18 @@ class GitHubServiceManager {
                 .observeOn(AndroidSchedulers.mainThread())
         val repos =  gitReposService.getData().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-        rx.Observable.zip(users, repos, zipFun).subscribe { dataLoaded() }
+
+        rx.Observable.zip(users, repos, zipFun).subscribe{dataLoaded(it)}
     }
 
     val zipFun = {
         users : List<User>, repos : List<Repository> ->
-        //todo
+        val argList = ArrayList<ItemModel>()
+        //todo populate
+        Observable.just(argList)
     }
 
-    private fun dataLoaded()
+    private fun dataLoaded(list : Observable<ArrayList<ItemModel>>?)
     {
         //todo bind to adapter
         //Log.e()
