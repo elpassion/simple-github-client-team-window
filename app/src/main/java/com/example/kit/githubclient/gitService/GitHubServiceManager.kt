@@ -19,17 +19,21 @@ class GitHubServiceManager(val activity : Activity) {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build()
-        val gitUserService by lazy {
+        private val gitUserService by lazy {
             retrofit.create(GitUsersService::class.java)
         }
-        val gitReposService by lazy {
+        private val gitReposService by lazy {
             retrofit.create(GitReposService::class.java)
         }
-        val gitUserDataService by lazy {
+        private val gitUserDataService by lazy {
             retrofit.create(GitUserDataService::class.java)
+        }
+        private val gitUserQuerryService by lazy {
+            retrofit.create(GitUserQueryService::class.java)
         }
     }
 
+    
 
     public fun getReposForUser(name :String) {
         gitUserDataService.getData(name).subscribeOn(Schedulers.io())
@@ -49,7 +53,7 @@ class GitHubServiceManager(val activity : Activity) {
         rx.Observable.zip(users, repos, zipFun).subscribe( {dataLoaded(it)}, {dataNotLoaded(it)} )
     }
 
-    val zipFun = {
+    private val zipFun = {
         users : List<User>, repos : List<Repository> ->
         (users+repos).sorted()
     }
