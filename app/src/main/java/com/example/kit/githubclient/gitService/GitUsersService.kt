@@ -7,6 +7,6 @@ import rx.Observable
 
 interface GitUsersService {
     @GET("users")
-    fun getData () : Observable<List<User>>
+    fun getData(): Observable<List<User>>
 }
 

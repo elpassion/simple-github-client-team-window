@@ -6,7 +6,7 @@ import java.util.*
 
 open class BaseAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    protected  val adapters = ArrayList<ItemAdapter>()
+    protected val adapters = ArrayList<ItemAdapter>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
         for (adapter in adapters) {

@@ -7,6 +7,6 @@ import rx.Observable
 
 interface GitReposService {
     @GET("repositories")
-    fun getData () : Observable<List<Repository>>
+    fun getData(): Observable<List<Repository>>
 }
 

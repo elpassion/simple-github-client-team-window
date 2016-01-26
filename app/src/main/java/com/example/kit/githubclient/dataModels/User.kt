@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * Created by jasiekpor on 22.01.2016.
  */
 
-class User(@SerializedName("login") override val name: String, val avatar_url: String) : ItemModel, Parcelable{
+class User(@SerializedName("login") override val name: String, val avatar_url: String) : ItemModel, Parcelable {
     companion object {
         val CREATOR: Parcelable.Creator<User> = object : Parcelable.Creator<User> {
             override fun createFromParcel(source: Parcel): User {
@@ -20,7 +20,8 @@ class User(@SerializedName("login") override val name: String, val avatar_url: S
             }
         }
     }
-    constructor(source: Parcel) : this(source.readString(),source.readString())
+
+    constructor(source: Parcel) : this(source.readString(), source.readString())
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(name)

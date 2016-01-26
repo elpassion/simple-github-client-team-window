@@ -8,5 +8,5 @@ import rx.Observable
 
 interface GitUserQueryService {
     @GET("search/users")
-    fun getData (@Query("q") name : String) : Observable<List<Repository>>
+    fun getData(@Query("q") name: String): Observable<List<Repository>>
 }

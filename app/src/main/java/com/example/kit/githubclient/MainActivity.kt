@@ -14,15 +14,14 @@ import com.example.kit.githubclient.gitService.GitHubServiceManager
 import io.fabric.sdk.android.Fabric
 
 
-
 class MainActivity : AppCompatActivity() {
     val mainRecyclerView by lazy { findViewById(R.id.main_recycler_view) as RecyclerView }
-    val editText by lazy{findViewById(R.id.edit_text) as EditText}
+    val editText by lazy { findViewById(R.id.edit_text) as EditText }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Fabric.with(this, Crashlytics());
         setContentView(R.layout.activity_main)
-        editText.addTextChangedListener(object:android.text.TextWatcher{
+        editText.addTextChangedListener(object : android.text.TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 //todo pobranie danych o 1 userze
             }
@@ -44,13 +43,12 @@ class MainActivity : AppCompatActivity() {
         GitHubServiceManager(this).getMainList()
     }
 
-    public fun loadRecyclerView(itemList : List<ItemModel>){
+    public fun loadRecyclerView(itemList: List<ItemModel>) {
         mainRecyclerView.layoutManager = LinearLayoutManager(mainRecyclerView.context)
         mainRecyclerView.adapter = ItemListAdapter(itemList)
     }
 
-    public fun printMessege(messege : String)
-    {
+    public fun printMessege(messege: String) {
         Snackbar.make(mainRecyclerView, messege, Snackbar.LENGTH_LONG).show()
     }
 }
