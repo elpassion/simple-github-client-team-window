@@ -12,26 +12,21 @@ import retrofit2.RxJavaCallAdapterFactory
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
+var gitUserService = GitHubServiceManager.retrofit.create(GitUsersService::class.java)
+var gitReposService = GitHubServiceManager.retrofit.create(GitReposService::class.java)
+var gitUserDataService = GitHubServiceManager.retrofit.create(GitUserDataService::class.java)
+
+private val gitUserQuerryService by lazy {
+    GitHubServiceManager.retrofit.create(GitUserQueryService::class.java)
+}
 class GitHubServiceManager(val activity : Activity) {
     companion object{
         private val BASE_URI="https://api.github.com"
-        private val retrofit = Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URI)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build()
-        private val gitUserService by lazy {
-            retrofit.create(GitUsersService::class.java)
-        }
-        private val gitReposService by lazy {
-            retrofit.create(GitReposService::class.java)
-        }
-        private val gitUserDataService by lazy {
-            retrofit.create(GitUserDataService::class.java)
-        }
-        private val gitUserQuerryService by lazy {
-            retrofit.create(GitUserQueryService::class.java)
-        }
     }
 
     public fun findUser(name: String) {
