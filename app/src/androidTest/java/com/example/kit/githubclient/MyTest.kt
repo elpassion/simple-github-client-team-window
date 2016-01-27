@@ -17,6 +17,23 @@ class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::clas
 
     @Test
     fun testMainListDownload() {
+        simpleData()
+
+        activity
+
+        onView(RecyclerViewMatcher(R.id.main_recycler_view)
+                .atPositionOnView(1, R.id.user_text_view))
+                .check(matches(withText("b")));
+    }
+
+    @Test
+    fun testUserAvatarOnMainRecyclerView(){
+        simpleData()
+        activity
+        //todo
+    }
+
+    private fun simpleData(){
         gitUserService = object:GitUsersService {
             override fun getData(): Observable<List<User>> {
                 return Observable.just(listOf<User>(
@@ -35,12 +52,6 @@ class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::clas
                 ))
             }
         }
-
-        activity
-
-        onView(RecyclerViewMatcher(R.id.main_recycler_view)
-                .atPositionOnView(1, R.id.user_text_view))
-                .check(matches(withText("b")));
     }
 /*
     private fun click(id: Int) {
