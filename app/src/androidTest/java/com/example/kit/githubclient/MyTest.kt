@@ -1,15 +1,15 @@
 package com.example.kit.githubclient
 
-import android.support.test.espresso.Espresso
-import android.support.test.espresso.action.ViewActions
-import android.support.test.espresso.assertion.ViewAssertions
-import android.support.test.espresso.contrib.RecyclerViewActions
-import android.support.test.espresso.matcher.ViewMatchers
+import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.test.ActivityInstrumentationTestCase2
 import com.example.kit.githubclient.dataModels.Repository
 import com.example.kit.githubclient.dataModels.User
-import com.example.kit.githubclient.gitService.*
-import android.support.v7.widget.RecyclerView;
+import com.example.kit.githubclient.gitService.GitReposService
+import com.example.kit.githubclient.gitService.GitUsersService
+import com.example.kit.githubclient.gitService.gitReposService
+import com.example.kit.githubclient.gitService.gitUserService
 import org.junit.Test
 import rx.Observable
 
@@ -38,9 +38,9 @@ class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::clas
 
         activity
 
-        Espresso.onView(RecyclerViewMatcher(R.id.main_recycler_view)
+        onView(RecyclerViewMatcher(R.id.main_recycler_view)
                 .atPositionOnView(1, R.id.user_text_view))
-                .check(ViewAssertions.matches(ViewMatchers.withText("b")));
+                .check(matches(withText("b")));
     }
 /*
     private fun click(id: Int) {
