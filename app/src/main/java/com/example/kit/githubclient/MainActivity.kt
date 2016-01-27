@@ -11,18 +11,20 @@ import com.crashlytics.android.Crashlytics
 import com.example.kit.githubclient.adapter.ItemListAdapter
 import com.example.kit.githubclient.dataModels.ItemModel
 import com.example.kit.githubclient.gitService.GitHubServiceManager
+import de.greenrobot.event.EventBus
 import io.fabric.sdk.android.Fabric
-
-
 
 class MainActivity : AppCompatActivity() {
     val mainRecyclerView by lazy { findViewById(R.id.main_recycler_view) as RecyclerView }
     val editText by lazy{findViewById(R.id.edit_text) as EditText}
     val activity by lazy {this}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Fabric.with(this, Crashlytics());
         setContentView(R.layout.activity_main)
+        EventBus.getDefault().register(this)
+
         editText.addTextChangedListener(object:android.text.TextWatcher{
             override fun afterTextChanged(s: Editable?) {
                 //todo pobranie danych o 1 userze
@@ -52,6 +54,9 @@ class MainActivity : AppCompatActivity() {
 
     public fun printMessege(messege: String) {
         Snackbar.make(mainRecyclerView, messege, Snackbar.LENGTH_LONG).show()
+    }
+    public fun onEvent(message :MessageEvent){
+        UserDetailsActivity.start(this,message.user)
     }
 }
 

@@ -1,8 +1,11 @@
 package com.example.kit.githubclient
 
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.v7.widget.RecyclerView
 import android.test.ActivityInstrumentationTestCase2
 import com.example.kit.githubclient.dataModels.Repository
 import com.example.kit.githubclient.dataModels.User
@@ -10,14 +13,15 @@ import com.example.kit.githubclient.gitService.GitReposService
 import com.example.kit.githubclient.gitService.GitUsersService
 import com.example.kit.githubclient.gitService.gitReposService
 import com.example.kit.githubclient.gitService.gitUserService
+import org.hamcrest.core.AllOf.allOf
 import org.junit.Test
 import rx.Observable
 
-class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::class.java){
+class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::class.java) {
 
     @Test
     fun testMainListDownload() {
-        simpleData()
+        sampleData()
 
         activity
 
@@ -27,23 +31,42 @@ class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::clas
     }
 
     @Test
-    fun testUserAvatarOnMainRecyclerView(){
-        simpleData()
+    fun testUserAvatarOnMainRecyclerView() {
+        sampleData()
         activity
-        //todo
+        onView(allOf(
+                isDescendantOfA(allOf(
+                        withParent(withId(R.id.main_recycler_view)),
+                        hasDescendant(allOf(
+                                withId(R.id.user_text_view),
+                                withText("b"))
+                        )
+                )),
+                withId(R.id.user_image_view))
+        ).check(matches(isDisplayed()))
+    }
+    @Test
+    fun testUserAvatarOnUserDetailScreen(){
+        sampleData()
+        activity
+        onView(withId(R.id.main_recycler_view))
+                .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+
+        onView(withId(R.id.user_details_image_view))
+        .check(matches(isDisplayed()))
     }
 
-    private fun simpleData(){
-        gitUserService = object:GitUsersService {
+    private fun sampleData() {
+        gitUserService = object : GitUsersService {
             override fun getData(): Observable<List<User>> {
                 return Observable.just(listOf<User>(
-                        User("a","http://i.imgur.com/Jvh1OQmb.jpg"),
-                        User("b","http://i.imgur.com/NUyttbnb.jpg"),
-                        User("c","http://i.imgur.com/NUyttbnb.jpg")))
+                        User("a", "http://i.imgur.com/Jvh1OQmb.jpg"),
+                        User("b", "http://i.imgur.com/NUyttbnb.jpg"),
+                        User("c", "http://i.imgur.com/NUyttbnb.jpg")))
             }
         }
 
-        gitReposService = object:GitReposService {
+        gitReposService = object : GitReposService {
             override fun getData(): Observable<List<Repository>> {
                 return Observable.just(listOf<Repository>(
                         Repository("d"),
@@ -53,13 +76,13 @@ class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::clas
             }
         }
     }
-/*
-    private fun click(id: Int) {
-        Espresso.onView(ViewMatchers.withId(id)).perform(ViewActions.click())
-    }
+    /*
+        private fun click(id: Int) {
+            Espresso.onView(ViewMatchers.withId(id)).perform(ViewActions.click())
+        }
 
-    private fun checkString(id: Int, string: String) {
-        Espresso.onView(ViewMatchers.withId(id)).check(ViewAssertions.matches(ViewMatchers.withText(string)))
-    }
-    */
+        private fun checkString(id: Int, string: String) {
+            Espresso.onView(ViewMatchers.withId(id)).check(ViewAssertions.matches(ViewMatchers.withText(string)))
+        }
+        */
 }

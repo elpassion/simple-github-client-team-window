@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.example.kit.githubclient.GoToUserDetailsOnClickListener
+import com.example.kit.githubclient.MessageEvent
 import com.example.kit.githubclient.R
 import com.example.kit.githubclient.dataModels.User
+import de.greenrobot.event.EventBus
 
 /**
  * Created by dmalantowicz on 15.01.2016.
@@ -23,7 +24,9 @@ class UserItemAdapter(private val user: User) : ItemAdapter {
     override fun onCreateViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.user_item_layout, parent, false)
-        view.setOnClickListener(GoToUserDetailsOnClickListener(user))
+        view.setOnClickListener{
+            EventBus.getDefault().post(MessageEvent(user))
+        }
         return UserItemHolder(view)
     }
 
