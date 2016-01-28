@@ -2,6 +2,7 @@ package com.example.kit.githubclient
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.assertion.ViewAssertions.doesNotExist
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import android.support.test.espresso.matcher.ViewMatchers.*
@@ -9,10 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.test.ActivityInstrumentationTestCase2
 import com.example.kit.githubclient.dataModels.Repository
 import com.example.kit.githubclient.dataModels.User
-import com.example.kit.githubclient.gitService.GitReposService
-import com.example.kit.githubclient.gitService.GitUsersService
-import com.example.kit.githubclient.gitService.gitReposService
-import com.example.kit.githubclient.gitService.gitUserService
+import com.example.kit.githubclient.gitService.*
 import org.hamcrest.core.AllOf.allOf
 import org.junit.Test
 import rx.Observable
@@ -45,6 +43,7 @@ class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::clas
                 withId(R.id.user_image_view))
         ).check(matches(isDisplayed()))
     }
+
     @Test
     fun testUserAvatarOnUserDetailScreen(){
         sampleData()
@@ -54,6 +53,15 @@ class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::clas
 
         onView(withId(R.id.user_details_image_view))
         .check(matches(isDisplayed()))
+    }
+    @Test
+    fun testOnlyUsersInRecyclerView(){
+        sampleData()
+        activity
+        onView(withId(R.id.users_only_check_box))
+        .perform(click())
+        onView(withId(R.id.repository_item_view))
+                .check(doesNotExist())
     }
 
     private fun sampleData() {
@@ -68,6 +76,16 @@ class MyTest : ActivityInstrumentationTestCase2<MainActivity>(MainActivity::clas
 
         gitReposService = object : GitReposService {
             override fun getData(): Observable<List<Repository>> {
+                return Observable.just(listOf<Repository>(
+                        Repository("d"),
+                        Repository("e"),
+                        Repository("f")
+                ))
+            }
+        }
+
+        gitUserDataService = object :GitUserDataService{
+            override fun getData(name: String): Observable<List<Repository>> {
                 return Observable.just(listOf<Repository>(
                         Repository("d"),
                         Repository("e"),

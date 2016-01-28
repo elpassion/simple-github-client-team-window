@@ -29,7 +29,6 @@ class UserDetailsActivity : Activity() {
 
     val detailsRecyclerView by lazy { findViewById(R.id.user_details_recycler_view) as RecyclerView }
     val userAvatar by lazy { findViewById(R.id.user_details_image_view) as ImageView }
-    val activity by lazy { this }
     val user by lazy { intent.getParcelableExtra<User>(userKey) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +36,11 @@ class UserDetailsActivity : Activity() {
         setUpUserDetails()
     }
 
-
     private fun setUpUserDetails(){
         Glide.with(userAvatar.context)
                 .load(user.avatar_url)
                 .into(userAvatar)
-        GitHubServiceManager(activity).getReposForUser(user.name)
+        GitHubServiceManager(this).getReposForUser(user.name)
     }
 
     public fun loadRecyclerView(itemList: List<Repository>) {

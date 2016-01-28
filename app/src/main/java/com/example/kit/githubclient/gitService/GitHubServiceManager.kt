@@ -49,7 +49,6 @@ class GitHubServiceManager(val activity : Activity) {
                 .observeOn(AndroidSchedulers.mainThread())
         val repos =  gitReposService.getData().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-
         rx.Observable.zip(users, repos, zipFun).subscribe( {dataLoaded(it)}, {dataNotLoaded(it)} )
     }
 
@@ -60,7 +59,7 @@ class GitHubServiceManager(val activity : Activity) {
 
     private fun dataLoaded(list : List<ItemModel>)
     {
-        (activity as MainActivity).loadRecyclerView(list)
+        (activity as MainActivity).loadUsersAndReposList(list)
     }
 
     private fun dataNotLoaded(t : Throwable) {
